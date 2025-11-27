@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>الان چی باید بخرم؟</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --bg: #050816;
+            --bg-soft: #0f172a;
+            --card: #020617;
+            --accent: #22c55e;
+            --accent-soft: rgba(34, 197, 94, 0.15);
+            --accent-strong: rgba(34, 197, 94, 0.7);
+            --danger: #f97316;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --border: #1f2933;
+            --shadow-soft: 0 14px 40px rgba(15, 23, 42, 0.8);
+            --radius-xl: 18px;
+            --radius-2xl: 22px;
+            --blur-bg: blur(18px);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "IRANSans", "Vazirmatn", sans-serif;
+            background: radial-gradient(circle at top, #0b1120 0, #020617 45%, #020617 100%);
+            color: var(--text);
+            min-height: 100vh;
+            direction: rtl;
+            font-size: 15px;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h1 span.emoji {
+            font-size: 1.6rem;
+        }
+
+        .today-label {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .now-box {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7));
+            border-radius: var(--radius-2xl);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 16px 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            align-items: center;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: var(--blur-bg);
+        }
+
+        .now-time {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .now-time-main {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .now-time-secondary {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .pill {
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            color: var(--muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pill strong {
+            color: var(--text);
+        }
+
+        .pill-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+            flex-shrink: 0;
+        }
+
+        .sections {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+            gap: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .sections {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        .panel {
+            background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.96));
+            border-radius: var(--radius-2xl);
+            border: 1px solid rgba(30, 64, 175, 0.5);
+            padding: 16px 14px 18px;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: var(--blur-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            opacity: 0.08;
+            background:
+                radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.5), transparent 55%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.4), transparent 55%);
+            pointer-events: none;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .panel-title span.icon {
+            font-size: 1.2rem;
+        }
+
+        .panel-subtitle {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .panel-body {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .empty-state {
+            font-size: 0.9rem;
+            color: var(--muted);
+            padding: 8px 10px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px dashed rgba(75, 85, 99, 0.7);
+        }
+
+        .item-card {
+            display: grid;
+            grid-template-columns: 72px minmax(0, 1fr);
+            gap: 10px;
+            padding: 10px;
+            border-radius: var(--radius-xl);
+            background: rgba(15, 23, 42, 0.94);
+            border: 1px solid rgba(55, 65, 81, 0.9);
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.7);
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(248, 250, 252, 0.02), transparent 60%);
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .item-card.small {
+            grid-template-columns: 60px minmax(0, 1fr);
+            padding: 8px;
+        }
+
+        .item-card.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.6), 0 0 26px rgba(34, 197, 94, 0.35);
+            background: radial-gradient(circle at top, rgba(22, 163, 74, 0.32), rgba(15, 23, 42, 0.98));
+        }
+
+        .item-card.active::after {
+            content: "آلارم فعال";
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(34, 197, 94, 0.7);
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            animation: pulseGlow 1.6s ease-out infinite;
+        }
+
+        .item-card.next {
+            border-color: rgba(59, 130, 246, 0.7);
+            background: radial-gradient(circle at top, rgba(37, 99, 235, 0.25), rgba(15, 23, 42, 0.98));
+        }
+
+        .item-image {
+            width: 100%;
+            height: 72px;
+            border-radius: 14px;
+            background: #020617;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(31, 41, 55, 0.85);
+        }
+
+        .item-image.small {
+            height: 64px;
+            border-radius: 12px;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .item-image.placeholder {
+            font-size: 0.7rem;
+            color: var(--muted);
+            padding: 0 6px;
+            text-align: center;
+        }
+
+        .item-main {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .item-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.4;
+        }
+
+        .item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(75, 85, 99, 0.9);
+            color: var(--muted);
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .badge strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .badge.active-badge {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: #bbf7d0;
+        }
+
+        .badge.next-badge {
+            border-color: rgba(96, 165, 250, 0.9);
+            background: rgba(37, 99, 235, 0.18);
+            color: #bfdbfe;
+        }
+
+        .badge-countdown {
+            border-color: rgba(249, 115, 22, 0.9);
+            background: rgba(248, 113, 22, 0.16);
+            color: #fed7aa;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--accent);
+        }
+
+        .badge-dot-next {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: #3b82f6;
+        }
+
+        .badge-dot-soft {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.9);
+        }
+
+        .timeline {
+            margin-top: 24px;
+        }
+
+        .timeline-day {
+            margin-bottom: 18px;
+        }
+
+        .timeline-day-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .timeline-day-title {
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .timeline-day-title span.day-pill {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid rgba(55, 65, 81, 0.9);
+            color: var(--muted);
+        }
+
+        .timeline-day-sub {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .timeline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .timeline-tag {
+            font-size: 0.73rem;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.7);
+            color: var(--muted);
+        }
+
+        /* دکمه تیک هر کارت */
+        .item-check {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.8);
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--muted);
+            backdrop-filter: blur(8px);
+            z-index: 2;
+        }
+
+        .item-check:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .item-check span {
+            pointer-events: none;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                transform: translateY(0);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+            }
+
+            70% {
+                transform: translateY(-1px);
+                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            }
+
+            100% {
+                transform: translateY(0);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        @keyframes softBlink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.55;
+            }
+        }
+
+        .blink-soft {
+            animation: softBlink 1.4s ease-in-out infinite;
+        }
+
+        /* ===========================
+       768px و پایین‌تر (تبلت / موبایل)
+       =========================== */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            .page {
+                padding: 20px 12px 28px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .today-label {
+                font-size: 0.8rem;
+            }
+
+            .now-box {
+                padding: 12px 12px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .pill {
+                font-size: 0.75rem;
+                max-width: 100%;
+            }
+
+            .item-card {
+                grid-template-columns: 64px minmax(0, 1fr);
+                padding: 8px;
+            }
+
+            .item-image {
+                height: 64px;
+            }
+
+            .item-title {
+                font-size: 0.85rem;
+            }
+
+            .badge {
+                font-size: 0.7rem;
+            }
+
+            .panel {
+                padding: 12px 10px 14px;
+            }
+
+            .timeline {
+                margin-top: 18px;
+            }
+        }
+
+        /* ===========================
+       480px و پایین‌تر (موبایل کوچک)
+       =========================== */
+        @media (max-width: 480px) {
+            .page {
+                padding: 16px 10px 24px;
+            }
+
+            .title-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            h1 span.emoji {
+                font-size: 1.4rem;
+            }
+
+            .pill {
+                white-space: normal;
+                align-self: stretch;
+                justify-content: flex-start;
+            }
+
+            .now-box {
+                border-radius: 16px;
+            }
+
+            .item-card,
+            .item-card.small {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .item-image,
+            .item-image.small {
+                height: 150px;
+                max-height: 38vw;
+            }
+
+            .item-check {
+                width: 22px;
+                height: 22px;
+                font-size: 12px;
+            }
+
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ===========================
+       360px و پایین‌تر (موبایل خیلی کوچک)
+       =========================== */
+        @media (max-width: 360px) {
+            body {
+                font-size: 13px;
+            }
+
+            .page {
+                padding: 14px 8px 20px;
+            }
+
+            h1 {
+                font-size: 1.1rem;
+            }
+
+            .now-time-main {
+                font-size: 1.3rem;
+            }
+
+            .now-time-secondary {
+                font-size: 0.8rem;
+            }
+
+            .panel {
+                border-radius: 16px;
+            }
+
+            .item-title {
+                font-size: 0.8rem;
+            }
+
+            .badge {
+                font-size: 0.68rem;
+                padding: 3px 6px;
+            }
+
+            .timeline-day-title {
+                font-size: 0.9rem;
+            }
+
+            .timeline-day-sub {
+                font-size: 0.73rem;
+            }
+        }
+
+        /* ===========================
+       320px و پایین‌تر (۲۸۰–۳۲۰)
+       =========================== */
+        @media (max-width: 320px) {
+            body {
+                font-size: 12px;
+            }
+
+            .page {
+                padding: 10px 6px 16px;
+            }
+
+            .now-box {
+                padding: 10px 10px;
+                gap: 6px;
+            }
+
+            .pill {
+                padding: 4px 8px;
+            }
+
+            .item-card {
+                padding: 7px;
+            }
+
+            .item-image,
+            .item-image.small {
+                height: 120px;
+                max-height: 40vw;
+            }
+
+            .item-check {
+                width: 20px;
+                height: 20px;
+                font-size: 11px;
+            }
+        }
+
+        /* ===========================
+       280px و پایین‌تر
+       =========================== */
+        @media (max-width: 280px) {
+            body {
+                font-size: 11px;
+            }
+
+            .page {
+                padding: 8px 4px 14px;
+            }
+
+            .title-row {
+                gap: 6px;
+            }
+
+            h1 {
+                font-size: 1rem;
+            }
+
+            .today-label {
+                font-size: 0.7rem;
+            }
+
+            .now-time-main {
+                font-size: 1.1rem;
+            }
+
+            .item-title {
+                font-size: 0.75rem;
+            }
+
+            .badge {
+                font-size: 0.62rem;
+            }
+
+            .item-image,
+            .item-image.small {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="title-row">
+                <div>
+                    <h1>
+                        <span class="emoji">⏰</span>
+                        <span>الان چی باید بخرم؟</span>
+                    </h1>
+                    <div class="today-label" id="today-label">در حال بارگذاری تاریخ...</div>
+                </div>
+                <div class="pill">
+                    <span class="pill-dot"></span>
+                    <span>بر اساس ساعت فعلی سیستم شما</span>
+                </div>
+            </div>
+
+            <div class="now-box">
+                <div class="now-time">
+                    <span class="now-time-main" id="clock-time">--:--:--</span>
+                    <span class="now-time-secondary" id="clock-date">--</span>
+                </div>
+                <div class="pill">
+                    <strong>وضعیت:</strong>
+                    <span id="status-label">در حال محاسبه...</span>
+                </div>
+                <div class="pill">
+                    <strong>بعدی:</strong>
+                    <span id="next-label">نامشخص</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="sections">
+            <!-- CURRENT / NEXT -->
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <div class="panel-title">
+                            <span class="icon">🔥</span>
+                            <span>همین الان و آیتم بعدی</span>
+                        </div>
+                        <div class="panel-subtitle">
+                            اگر چیزی در بازه‌ی زمانی فعلی باشد، اینجا هایلایت می‌شود.
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="card-list" id="current-list"></div>
+                </div>
+            </section>
+
+            <!-- TIMELINE -->
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <div class="panel-title">
+                            <span class="icon">🗓️</span>
+                            <span>برنامه‌ی کامل تخفیف‌ها</span>
+                        </div>
+                        <div class="panel-subtitle">
+                            همه‌ی محصولات به ترتیب زمان؛ برای چک‌لیست ذهنی.
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body timeline" id="timeline"></div>
+            </section>
+        </main>
+    </div>
+    <script>
+        // ------------------------------
+        // تنظیم داینامیک تاریخ‌ها
+        // ------------------------------
+
+        // امروز از روی سیستم (فرض: امروز = ۶ آذر)
+        const today = new Date();
+
+        // ۶ آذر = امروز
+        const day6Base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        // ۷ آذر = فردا
+        const day7Base = new Date(day6Base);
+        day7Base.setDate(day7Base.getDate() + 1);
+
+        // هِلپر برای ساختن بازه زمانی
+        function makeRange(baseDate, sh, sm, eh, em) {
+            const start = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), sh, sm);
+            const end = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), eh, em);
+            return { start, end };
+        }
+
+        // ------------------------------
+        // داده‌ها (فقط ساعت‌ها رو می‌دیم، تاریخ رو از بالا می‌گیره)
+        // ------------------------------
+
+        // ------------------------------
+        // داده‌ها (۶ و ۷ آذر با همه‌ی تایم‌ها)
+        // ------------------------------
+
+        const itemsRaw = [
+            // ---------------- ۶ آذر ----------------
+            {
+                title: "کیف زنانه دوشی مدل پرتو",
+                img: null,
+                dayLabel: "۶ آذر",
+                hasExactTime: true,
+                ...makeRange(day6Base, 20, 0, 22, 0)
+            },
+            {
+                title: "کیف ستیا",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ002295FD.png",
+                dayLabel: "۶ آذر",
+                hasExactTime: true,
+                ...makeRange(day6Base, 22, 0, 24, 0)
+            },
+            {
+                title: "کفش اسنیکر سفید مشکی Amiri Stars Vintage مدل 5979",
+                img: null,
+                dayLabel: "۶ آذر",
+                hasExactTime: true,
+                ...makeRange(day6Base, 22, 0, 24, 0)
+            },
+            {
+                title: "کوله پشتی فوروارد مدل FORWARD - FCLT5020 JOKER",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0011F79C.png",
+                dayLabel: "۶ آذر",
+                hasExactTime: true,
+                ...makeRange(day6Base, 22, 0, 24, 0)
+            },
+
+            // ---------------- ۷ آذر - بامداد ----------------
+            // 01:00 - 02:00
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 1, 0, 2, 0)
+            },
+            {
+                title: "پاوربانک 18 وات شیائومی مدل Redmi PB200LZM ظرفیت 20000 میلی آمپر ساعت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0028D9AE.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 1, 0, 2, 0)
+            },
+            {
+                title: "کنسول بازی سونی مدل PlayStation 5 Slim Digital Edition ظرفیت یک ترابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0030F35B.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 1, 0, 2, 0)
+            },
+            {
+                title: "کوله پشتی اسپرت فوروارد مدل FCLT8844 PRE EMINENT",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0011D976.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 1, 0, 2, 0)
+            },
+
+            // 02:00 - 03:00
+            {
+                title: "دریل شارژی ۲۱ ولت چکشی موتور براشلس ادون مدل bl21",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001E61EC.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 2, 0, 3, 0)
+            },
+            {
+                title: "پودر کراتین مونوهیدرات اسپرت مدیکال - 300 گرم",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ002D6981.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 2, 0, 3, 0)
+            },
+            {
+                title: "گوشی موبايل سامسونگ مدل Galaxy A06 4G ظرفیت 64 گیگابایت رم 4 گیگابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ00248695.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 2, 0, 3, 0)
+            },
+            {
+                title: "گوشی موبایل اپل iPhone 17 Promax ZA/A ظرفیت 256 گیگابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0024BEE1.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 2, 0, 3, 0)
+            },
+
+            // 03:00 - 04:00
+            {
+                title: "اسپرسوساز میگل مدل GEM 100",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0023DE22.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 3, 0, 4, 0)
+            },
+
+            // ---------------- ۷ آذر - صبح / ظهر ----------------
+            // 10:00 - 12:00
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 10, 0, 12, 0)
+            },
+
+            // 11:00 - 15:00
+            {
+                title: "دریل شارژی تک باطری اُپتیما مدل OP-1240 (یکسال گارانتی)",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001E8B38.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 11, 0, 15, 0)
+            },
+            {
+                title: "دریل چکشی ۱۳ میلیمتر راویکس مدل 13sre",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001E6882.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 11, 0, 15, 0)
+            },
+            {
+                title: "ساعت دنیل ولینگتون زنانه نقره ای مشکی بند چرم DW-4740-32-L",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ00206D9F.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 11, 0, 15, 0)
+            },
+            {
+                title: "شکلات صبحانه نوتلا لهستان 350 گرم",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0024C8EB.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 11, 0, 15, 0)
+            },
+            {
+                title: "کفش و کتانی زنانه و دخترانه مدل نایک NIKE رنگ مشکی سفید کد B171",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ00289C46.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 11, 0, 15, 0)
+            },
+
+            // 12:00 - 14:00
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 12, 0, 14, 0)
+            },
+            {
+                title: "گوشی موبایل اپل iPhone 17 Promax ZA/A ظرفیت 256 گیگابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0024BEE1.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 12, 0, 14, 0)
+            },
+            {
+                title: "کنسول بازی سونی مدل PlayStation 5 Slim Digital Edition ظرفیت یک ترابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0030F35B.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 12, 0, 14, 0)
+            },
+
+            // 14:00 - 15:00
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 14, 0, 15, 0)
+            },
+            {
+                title: "موبایل سامسونگ S25 اولترا / حافظه ۲۵۶",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0024EBFF.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 14, 0, 15, 0)
+            },
+            {
+                title: "کنسول بازی سونی مدل PlayStation 5 Slim Digital Edition ظرفیت یک ترابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0030F35B.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 14, 0, 15, 0)
+            },
+            {
+                title: "کیف مجلسی زنانه مدل ملارا",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0022929F.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 14, 0, 15, 0)
+            },
+
+            // 15:00 - 16:00
+            {
+                title: "موتور سیکلت کبیر طرح هوندا کلیک اتاق قدیم 170 سی سی سال 1404",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001F3F18.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 15, 0, 16, 0)
+            },
+            {
+                title: "تلویزیون ال ای دی جی پلاس Gplus GTV-50MU722S",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ003C5C0E.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 15, 0, 16, 0)
+            },
+
+            // 15:00 - 18:00
+            {
+                title: "عینک آفتابی بچه گانه خرسی Kids Sunglasses 875",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001BCE64.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 15, 0, 18, 0)
+            },
+            {
+                title: "جوراب نایک ساق بلند مشکی",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001FA5D6.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 15, 0, 18, 0)
+            },
+            {
+                title: "جعبه بکس 46 پارچه 1/4 اینتیمکس",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001E67F1.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 15, 0, 18, 0)
+            },
+
+            // 16:00 - 17:00
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 16, 0, 17, 0)
+            },
+            {
+                title: "کنسول بازی سونی مدل PlayStation 5 Slim Digital Edition ظرفیت یک ترابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0030F35B.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 16, 0, 17, 0)
+            },
+            {
+                title: "هوا پز (سرخ کن بدون روغن) میگل مدل GAF 150",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0023E04A.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 16, 0, 17, 0)
+            },
+
+            // 17:00 - 18:00
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 17, 0, 18, 0)
+            },
+            {
+                title: "کنسول بازی سونی مدل PlayStation 5 Slim Digital Edition ظرفیت یک ترابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0030F35B.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 17, 0, 18, 0)
+            },
+            {
+                title: "تلویزیون ال ای دی جی پلاس Gplus GTV-50MU722S",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ003C5C0E.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 17, 0, 18, 0)
+            },
+            {
+                title: "دریل شارژی ۲۱ ولت چکشی موتور براشلس ادون مدل bl21",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001E61EC.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 17, 0, 18, 0)
+            },
+
+            // 18:00 - 19:00
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 18, 0, 19, 0)
+            },
+            {
+                title: "کنسول بازی سونی مدل PlayStation 5 Slim Digital Edition ظرفیت یک ترابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0030F35B.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 18, 0, 19, 0)
+            },
+            {
+                title: "ترنچ کت بلند ضد آب آیسو آناهید-آیسو",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001B0ED2.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 18, 0, 19, 0)
+            },
+
+            // 18:00 - 21:00
+            {
+                title: "کفش و کتانی زنانه و دخترانه مدل نایک NIKE رنگ مشکی سفید کد B170",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ00288FED.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 18, 0, 21, 0)
+            },
+            {
+                title: "نانو پرسو دو کاره با کیف یونیک",
+                img: null,
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 18, 0, 21, 0)
+            },
+            {
+                title: "خردکن برقی مولینکس 400 وات مدل AT711",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001911F9.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 18, 0, 21, 0)
+            },
+
+            // 19:00 - 20:00
+            {
+                title: "قرص زینکوویت ویتامین سی هلث اید 60 عددی",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001DC311.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 19, 0, 20, 0)
+            },
+            {
+                title: "لپ تاپ 15.6 اینچی ایسوس مدل Vivobook X1504VA NJ380 i5 1335U 16GB DDR4 - نقره‌ای",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001D7EC4.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 19, 0, 20, 0)
+            },
+
+            // 20:00 - 21:00
+            {
+                title: "پروژکتور هوشمند قابل حمل مدل ونوس (venus)",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001745AD.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 20, 0, 21, 0)
+            },
+
+            // 21:00 - 22:00
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 21, 0, 22, 0)
+            },
+            {
+                title: "کنسول بازی سونی مدل PlayStation 5 Slim Digital Edition ظرفیت یک ترابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0030F35B.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 21, 0, 22, 0)
+            },
+
+            // 21:00 - 24:00
+            {
+                title: "دریل پیچ گوشتی شارژی خانگی ۱۲ ولت آروا مدل ۵۸۲۱",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001E04AE.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 21, 0, 24, 0)
+            },
+            {
+                title: "دریل چکشی رونیکس مدل 2260",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001E646E.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 21, 0, 24, 0)
+            },
+            {
+                title: "سرخ کن بدون روغن فیلیپس مدل Ph-NA230/00",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0024C98B.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 21, 0, 24, 0)
+            },
+
+            // 22:00 - 23:00
+            {
+                title: "تلویزیون ال ای دی جی پلاس Gplus GTV-50MU722S",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ003C5C0E.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 22, 0, 23, 0)
+            },
+            {
+                title: "ساعت هوشمند شیائومی مدل Redmi Watch 5 Active نسخه گلوبال",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ00246E89.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 22, 0, 23, 0)
+            },
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 22, 0, 23, 0)
+            },
+            {
+                title: "گوشی موبایل اپل iPhone 17 Promax ZA/A ظرفیت 256 گیگابایت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0024BEE1.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 22, 0, 23, 0)
+            },
+
+            // 23:00 - 24:00
+            {
+                title: "دریل شارژی ۲۱ ولت چکشی موتور براشلس ادون مدل bl21",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ001E61EC.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 23, 0, 24, 0)
+            },
+            {
+                title: "موبایل سامسونگ مدل Galaxy A16 4G | حافظه 128",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0031F47C.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 23, 0, 24, 0)
+            },
+            {
+                title: "پاوربانک 18 وات شیائومی مدل Redmi PB200LZM ظرفیت 20000 میلی آمپر ساعت",
+                img: "https://web-cdn.snapp.ir/fintech-marketing/Campaign/Del/140409/timetable_items/MNJ0028D9AE.png",
+                dayLabel: "۷ آذر",
+                hasExactTime: true,
+                ...makeRange(day7Base, 23, 0, 24, 0)
+            }
+        ];
+
+        // نرمال‌سازی برای استفاده در بقیه‌ی کد
+        const items = itemsRaw.map((item, idx) => ({
+            ...item,
+            id: idx,
+            day: item.dayLabel,
+            startDate: item.hasExactTime ? item.start : null,
+            endDate: item.hasExactTime ? item.end : null
+        }));
+
+
+        // ------------------------------
+        // کش دائمی تیک‌ها (localStorage)
+        // ------------------------------
+
+        const STORAGE_KEY = "buylist_done_items_v1";
+
+        function loadDoneItems() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return new Set();
+                const arr = JSON.parse(raw);
+                if (!Array.isArray(arr)) return new Set();
+                return new Set(arr);
+            } catch (e) {
+                return new Set();
+            }
+        }
+
+        let doneItems = loadDoneItems();
+
+        function persistDoneItems() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(doneItems)));
+            } catch (e) {
+                // هیچی، فقط سایلنت
+            }
+        }
+
+        function getVisibleItems() {
+            return items.filter(i => !doneItems.has(i.id));
+        }
+
+        // ------------------------------
+        // Helper functions
+        // ------------------------------
+
+        function formatTime(dt) {
+            if (!dt) return "";
+            const h = dt.getHours().toString().padStart(2, "0");
+            const m = dt.getMinutes().toString().padStart(2, "0");
+            return `${h}:${m}`;
+        }
+
+        function formatPersianDate(dt) {
+            if (!dt) return "";
+            return dt.toLocaleDateString("fa-IR", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+        }
+
+        function diffToString(ms) {
+            if (ms <= 0) return "0 دقیقه";
+            const totalSec = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSec / 3600);
+            const minutes = Math.floor((totalSec % 3600) / 60);
+            if (hours > 0) {
+                return `${hours}س و ${minutes.toString().padStart(2, "0")}د`;
+            }
+            return `${minutes} دقیقه`;
+        }
+
+        // ------------------------------
+        // DOM
+        // ------------------------------
+
+        const clockTimeEl = document.getElementById("clock-time");
+        const clockDateEl = document.getElementById("clock-date");
+        const todayLabelEl = document.getElementById("today-label");
+        const statusLabelEl = document.getElementById("status-label");
+        const nextLabelEl = document.getElementById("next-label");
+        const currentListEl = document.getElementById("current-list");
+        const timelineEl = document.getElementById("timeline");
+
+        function renderTimeline() {
+            const groups = {};
+            const visible = getVisibleItems();
+
+            visible.forEach(item => {
+                if (!groups[item.day]) groups[item.day] = [];
+                groups[item.day].push(item);
+            });
+
+            const dayOrder = ["۶ آذر", "۷ آذر"];
+            timelineEl.innerHTML = "";
+
+            dayOrder.forEach(day => {
+                const dayItems = groups[day];
+                if (!dayItems || !dayItems.length) return;
+
+                dayItems.sort((a, b) => {
+                    if (!a.hasExactTime && !b.hasExactTime) return 0;
+                    if (!a.hasExactTime) return 1;
+                    if (!b.hasExactTime) return -1;
+                    return a.startDate - b.startDate;
+                });
+
+                const dayDiv = document.createElement("div");
+                dayDiv.className = "timeline-day";
+
+                const headerDiv = document.createElement("div");
+                headerDiv.className = "timeline-day-header";
+
+                const titleDiv = document.createElement("div");
+                titleDiv.className = "timeline-day-title";
+                titleDiv.innerHTML = `<span>${day}</span><span class="day-pill">${day === "۶ آذر" ? "روز قبل" : "امروز (تقریبی)"}</span>`;
+
+                const subDiv = document.createElement("div");
+                subDiv.className = "timeline-day-sub";
+                subDiv.textContent = "به ترتیب ساعت تخفیف";
+
+                headerDiv.appendChild(titleDiv);
+                headerDiv.appendChild(subDiv);
+
+                const listDiv = document.createElement("div");
+                listDiv.className = "timeline-list";
+
+                dayItems.forEach(item => {
+                    const card = createItemCard(item, { small: true, showCountdown: false });
+                    listDiv.appendChild(card);
+                });
+
+                // زمان نامشخص تگ
+                const hasUnknown = dayItems.some(i => !i.hasExactTime);
+                if (hasUnknown) {
+                    const tag = document.createElement("div");
+                    tag.className = "timeline-tag";
+                    tag.textContent = "بعضی آیتم‌ها در این روز زمان دقیق ندارند (فقط در همین لیست نمایش داده می‌شوند).";
+                    listDiv.appendChild(tag);
+                }
+
+                dayDiv.appendChild(headerDiv);
+                dayDiv.appendChild(listDiv);
+                timelineEl.appendChild(dayDiv);
+            });
+        }
+
+        function createItemCard(item, options = {}) {
+            const small = !!options.small;
+            const showCountdown = !!options.showCountdown;
+            const card = document.createElement("div");
+            card.className = "item-card" + (small ? " small" : "");
+
+            const imgWrapper = document.createElement("div");
+            imgWrapper.className = "item-image" + (small ? " small" : "");
+            if (item.img) {
+                const img = document.createElement("img");
+                img.src = item.img;
+                img.alt = item.title;
+                imgWrapper.appendChild(img);
+            } else {
+                imgWrapper.classList.add("placeholder");
+                imgWrapper.textContent = "بدون تصویر";
+            }
+
+            const mainDiv = document.createElement("div");
+            mainDiv.className = "item-main";
+
+            const titleDiv = document.createElement("div");
+            titleDiv.className = "item-title";
+            titleDiv.textContent = item.title;
+
+            const metaDiv = document.createElement("div");
+            metaDiv.className = "item-meta";
+
+            const timeBadge = document.createElement("div");
+            timeBadge.className = "badge";
+            if (!item.hasExactTime || !item.startDate) {
+                timeBadge.innerHTML = `<span class="badge-dot-soft"></span><span>${item.day} - زمان نامشخص</span>`;
+            } else {
+                timeBadge.innerHTML =
+                    `<span class="badge-dot-soft"></span>` +
+                    `<span>${item.day}</span>` +
+                    `<span>|</span>` +
+                    `<strong>${formatTime(item.startDate)} تا ${formatTime(item.endDate)}</strong>`;
+            }
+
+            metaDiv.appendChild(timeBadge);
+
+            if (showCountdown && item.startDate) {
+                const countdownBadge = document.createElement("div");
+                countdownBadge.className = "badge badge-countdown";
+                countdownBadge.id = `countdown-${item.id}`;
+                countdownBadge.textContent = "در حال محاسبه...";
+                metaDiv.appendChild(countdownBadge);
+            }
+
+            mainDiv.appendChild(titleDiv);
+            mainDiv.appendChild(metaDiv);
+
+            card.appendChild(imgWrapper);
+            card.appendChild(mainDiv);
+
+            // دکمه تیک
+            const checkBtn = document.createElement("button");
+            checkBtn.type = "button";
+            checkBtn.className = "item-check";
+            checkBtn.title = "این آیتم رو خریدم / انجام شد (از لیست حذف می‌شود)";
+            checkBtn.innerHTML = "<span>✓</span>";
+            checkBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                doneItems.add(item.id);
+                persistDoneItems();
+                renderTimeline();
+                updateCurrentAndNext();
+            });
+            card.appendChild(checkBtn);
+
+            card.dataset.itemId = item.id;
+            return card;
+        }
+
+        function updateCurrentAndNext() {
+            const now = new Date();
+            const visible = getVisibleItems();
+            const withTime = visible.filter(i => i.hasExactTime && i.startDate && i.endDate);
+
+            const current = withTime.filter(i => i.startDate <= now && now <= i.endDate);
+            const future = withTime.filter(i => i.startDate > now);
+            future.sort((a, b) => a.startDate - b.startDate);
+            const next = future[0] || null;
+
+            currentListEl.innerHTML = "";
+
+            if (!current.length && !next) {
+                const empty = document.createElement("div");
+                empty.className = "empty-state";
+                empty.textContent = "در حال حاضر هیچ بازه‌ی فعالی در برنامه نیست و آیتم بعدی هم پیدا نشد.";
+                currentListEl.appendChild(empty);
+                statusLabelEl.textContent = "هیچ آیتم فعالی نیست.";
+                nextLabelEl.textContent = "نامشخص";
+                return;
+            }
+
+            if (current.length) {
+                statusLabelEl.textContent = `${current.length} آیتم الان در بازه‌ی تخفیف هستند.`;
+            } else {
+                statusLabelEl.textContent = "هنوز شروع نشده؛ منتظر آیتم بعدی باش.";
+            }
+
+            if (current.length) {
+                current.forEach(item => {
+                    const card = createItemCard(item, { small: false, showCountdown: false });
+                    card.classList.add("active");
+                    currentListEl.appendChild(card);
+                });
+            }
+
+            // جدا کننده
+            if (next) {
+                if (current.length) {
+                    const sep = document.createElement("div");
+                    sep.className = "panel-subtitle";
+                    sep.style.margin = "4px 0 2px";
+                    sep.textContent = "بعد از این بازه، نوبت این محصول/محصول‌هاست:";
+                    currentListEl.appendChild(sep);
+                }
+
+                const nextCard = createItemCard(next, { small: false, showCountdown: true });
+                nextCard.classList.add("next");
+                nextCard.classList.add("blink-soft");
+                currentListEl.appendChild(nextCard);
+
+                const diffMs = next.startDate - now;
+                nextLabelEl.textContent = `${next.title} (شروع در ${formatTime(next.startDate)}، حدود ${diffToString(diffMs)} دیگر)`;
+
+                const cdEl = document.getElementById(`countdown-${next.id}`);
+                if (cdEl) {
+                    cdEl.textContent = `شروع در ${formatTime(next.startDate)} (حدود ${diffToString(diffMs)} دیگر)`;
+                }
+            } else {
+                nextLabelEl.textContent = "آیتم بعدی‌ای در برنامه نیست.";
+            }
+
+            // هایلایت کارت‌های timeline (فقط روی آیتم‌های هنوز پاک نشده)
+            document.querySelectorAll(".item-card").forEach(el => {
+                el.classList.remove("active", "next", "blink-soft");
+            });
+
+            current.forEach(item => {
+                document.querySelectorAll(`.item-card[data-item-id='${item.id}']`).forEach(el => {
+                    el.classList.add("active");
+                });
+            });
+
+            if (next) {
+                document.querySelectorAll(`.item-card[data-item-id='${next.id}']`).forEach(el => {
+                    el.classList.add("next", "blink-soft");
+                });
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            clockTimeEl.textContent = now.toLocaleTimeString("fa-IR", { hour12: false });
+            clockDateEl.textContent = formatPersianDate(now);
+            todayLabelEl.textContent = `الان: ${formatPersianDate(now)} - این صفحه بر اساس ساعت سیستم شما حساب می‌کند.`;
+        }
+
+        // init
+        renderTimeline();
+        updateClock();
+        updateCurrentAndNext();
+
+        setInterval(updateClock, 1000);
+        setInterval(updateCurrentAndNext, 15000); // هر ۱۵ ثانیه آپدیت
+    </script>
+</body>
+
+</html>
